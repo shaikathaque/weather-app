@@ -94,7 +94,6 @@
 					<button id="findMyWeather" class="btn btn-success btn-lg"> Find my weather </button>
 					
 					
-				
 				</form>
 			
 				<div id="success" class="alert alert-success"></div>
@@ -118,39 +117,44 @@
 
 <script>
 
-	//javascript to get weather data from weather-forecast.com
-
+	//JavaScript to get weather data from weather-forecast.com
+	
 	$("#findMyWeather").click(function(event) {
 		
+		//prevent form from being submitted. Otherwise, data from form is submitted to the url and jQuery .get function doesn not work
 		event.preventDefault(); 
 		
-		if ($("#city").val()!="") { //if something is entered
+		//if input field is not empty
+		if ($("#city").val()!="") { 
 		
-		$.get("scraper.php?city="+$("#city").val(), function( data ) { //get city name from form and use it as $_GET variable for scraper.php
+			//use city name to send a get request to scraper.php
+			//use the data returned to execute the following function
+			$.get("scraper.php?city="+$("#city").val(), function( data ) { 
 			
-			if(data=="") { //if form empty
+				//if no results returned
+				if(data=="") { 
 				
-				//hide previous messages and display error message
+					//hide previous messages and display error message
 				
-				$("#noCity").hide(); 
-				$("#success").hide();
-				$("#fail").fadeIn();
+					$("#noCity").hide(); 
+					$("#success").hide();
+					$("#fail").fadeIn();
 				
-			} else {
+				}	else {
 			
-				//hide previous messages and display city name
+					//if a result is returned, hide previous messages and display weather information
 			
-			$("#noCity").hide();
-			$("#fail").hide();
-			$("#success").html(data).fadeIn();
+					$("#noCity").hide();
+					$("#fail").hide();
+					$("#success").html(data).fadeIn();
 			
-			}
+					}
 			
 		});
 		
 		} else {
 			
-			//hide previous messages and display that city not entered
+			//if city not entered by user, hide previous messages and ask to enter a city
 			
 			$("#success").hide();
 			$("#fail").hide();
